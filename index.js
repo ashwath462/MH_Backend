@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());
 const cors = require("cors");
-
+const authRoutes = require('./routes/authRoutes')
+// const User = require("./models/user");
 const URL = "mongodb://localhost:27017/MH";
 const frontend = "http://localhost:3000";
 
@@ -25,17 +26,20 @@ app.use((req, res, next) => {
     next();
   });
 
+
+// app.use(User)
+app.use(authRoutes)
 const port =process.env.PORT|| 9000;
 mongoose.connect(URL,{ useNewUrlParser: true,  useUnifiedTopology: true }, ()=>{
     console.log('Schema Started');
 });
 
-app.get("/pp",(req,res)=>{
-    res.send("Hello World")
-    console.log(req);
-});
+// app.get("/pp",(req,res)=>{
+//     res.send("Hello World")
+//     // console.log(req);
+// });
 
-app.get("/",(req,res)=>{
+app.get("*",(req,res)=>{
     res.send("Hello")
 })
 
